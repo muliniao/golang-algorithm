@@ -16,9 +16,12 @@ func NewArrayList() *ArrayList {
 	}
 }
 
-func (a *ArrayList) get(index int) interface{} {
-	//rangeCheck(index)
-	return a.elementData[index]
+func (a *ArrayList) get(index int) (interface{}, error) {
+	if err := a.rangeCheck(index); err != nil {
+		return nil, err
+	}
+
+	return a.elementData[index], nil
 }
 
 func (a *ArrayList) set() {
@@ -50,4 +53,18 @@ func (a *ArrayList) rangeCheck(index int) error {
 		return errors.New("index out of bounds")
 	}
 	return nil
+}
+
+// src: source array
+// srcPos: starting position in the source array
+// dest: the destination array
+// destPos: starting position in the destination data
+// length: the number of array elements to be copied, newCapacity
+
+func (a *ArrayList) arrayCopy(src interface{}, srcPos int, dest interface{}, desPos int, length int) {
+
+	a.elementData = make([]interface{}, length, length)
+	a.elementData = append(a.elementData, src)
+
+
 }
