@@ -22,7 +22,7 @@ func NewArrayList() *ArrayList {
 	}
 }
 
-func (a *ArrayList) get(index int) (interface{}, error) {
+func (a *ArrayList) Get(index int) (interface{}, error) {
 	if err := a.rangeCheck(index); err != nil {
 		return nil, err
 	}
@@ -30,31 +30,39 @@ func (a *ArrayList) get(index int) (interface{}, error) {
 	return a.elementData[index], nil
 }
 
-func (a *ArrayList) set() {
+func (a *ArrayList) Set(index int, value interface{}) (interface{}, error) {
+	if err := a.rangeCheck(index); err != nil {
+		return nil, err
+	}
 
+	oldValue := a.elementData[index]
+	a.elementData[index] = value
+	return oldValue, nil
 }
 
-func (a *ArrayList) add(value interface{}) bool {
+func (a *ArrayList) Add(value interface{}) bool {
 	newSize := a.size + 1
 	a.ensureCapacityInternal(newSize)
 	a.elementData[newSize] = value
 	return true
 }
 
-func (a *ArrayList) remove() {
+func (a *ArrayList) Remove(index int) (interface{}, error) {
+	if err := a.rangeCheck(index); err != nil {
+		return nil, err
+	}
 
+	oldValue := a.elementData[index]
+	a.elementData = append(a.elementData[:index], a.elementData[index + 1:]...)
+
+	return oldValue, nil
 }
 
-func (a *ArrayList) indexOf() {
-
-}
-
-func (a *ArrayList) lastIndexOf() {
-
-}
-
-func (a *ArrayList) clear() {
-
+func (a *ArrayList) Clear() {
+	for i := 0; i < a.size; i++ {
+		a.elementData[i] = nil
+	}
+	a.size = 0
 }
 
 func (a *ArrayList) rangeCheck(index int) error {
@@ -65,7 +73,7 @@ func (a *ArrayList) rangeCheck(index int) error {
 }
 
 func (a *ArrayList) ensureCapacityInternal(minCapacity int) {
-
+	a.ensureExplicitCapacity(a.calculateCapacity(a.elementData, minCapacity))
 }
 
 func (a *ArrayList) calculateCapacity(elementData []interface{}, minCapacity int) int {
@@ -75,12 +83,17 @@ func (a *ArrayList) calculateCapacity(elementData []interface{}, minCapacity int
 	//}
 	//return minCapacity;
 
+	if DefaultCapacity > minCapacity {
+		return DefaultCapacity
+	}
+
 	return minCapacity
 }
 
 func (a *ArrayList) ensureExplicitCapacity(minCapacity int) {
-
-
+	if minCapacity - len(a.elementData) > 0 {
+		a.grow(minCapacity)
+	}
 }
 
 func (a *ArrayList) grow(minCapacity int) {
@@ -88,12 +101,12 @@ func (a *ArrayList) grow(minCapacity int) {
 	oldCapacity := len(a.elementData)
 	// 加0.5倍
 	newCapacity := oldCapacity + (oldCapacity >> 1)
-	// ?如果加0.5倍后，还不行
+	// 如果加0.5倍后，还是小于想要的容量
 	if newCapacity - minCapacity < 0 {
 		newCapacity = minCapacity
 	}
 
-	if newCapacity -MaxArraySize > 0 {
+	if newCapacity - MaxArraySize > 0 {
 		newCapacity = a.hugeCapacity(minCapacity)
 	}
 
