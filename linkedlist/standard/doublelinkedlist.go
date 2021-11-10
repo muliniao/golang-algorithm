@@ -1,4 +1,4 @@
-package linkedlist
+package standard
 
 import "errors"
 
@@ -7,7 +7,7 @@ type Element struct {
 	Next, Prev 	*Element
 }
 
-func NewElement(value interface{}, next, before *Element) *Element{
+func NewElement(value interface{}, next, before *Element) *Element {
 	return &Element{
 		Value: value,
 		Next:  next,
@@ -121,6 +121,3 @@ func (d *DoubleLinkedList) checkElementIndex(index int) error {
 	}
 	return nil
 }
-
-
-
