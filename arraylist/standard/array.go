@@ -1,4 +1,4 @@
-package arraylist
+package standard
 
 import (
 	"errors"
@@ -106,7 +106,7 @@ func (a *ArrayList) grow(minCapacity int) {
 		newCapacity = minCapacity
 	}
 
-	if newCapacity - MaxArraySize > 0 {
+	if newCapacity -MaxArraySize > 0 {
 		newCapacity = a.hugeCapacity(minCapacity)
 	}
 

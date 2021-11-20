@@ -1,4 +1,4 @@
-package arraylist
+package standard
 
 type Array interface {
 	Get(index int) (interface{}, error)
