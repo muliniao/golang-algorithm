@@ -123,10 +123,8 @@ func (d *DoubleLinkedList) ShowLinkedList() []interface{} {
 
 	list := make([]interface{}, 0)
 
-	temp := d.Header
-	for i := 0; i < d.Size; i++ {
+	for temp := d.Header; temp != nil; temp = temp.Next {
 		list = append(list, temp.Value)
-		temp = temp.Next
 	}
 	return list
 }
