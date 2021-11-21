@@ -1,6 +1,8 @@
 package standard
 
-import "errors"
+import (
+	"errors"
+)
 
 type Element struct {
 	Value		interface{}
@@ -20,6 +22,13 @@ type DoubleLinkedList struct {
 	Header  *Element
 }
 
+func NewDoubleLinkedList(header *Element) *DoubleLinkedList {
+	return &DoubleLinkedList{
+		Size:   1,
+		Header: header,
+	}
+}
+
 func (d *DoubleLinkedList) Add(value interface{}) *Element {
 
 	if d.Size == 0 {
@@ -29,9 +38,11 @@ func (d *DoubleLinkedList) Add(value interface{}) *Element {
 	}
 
 	temp := d.Header
-	for ; temp.Next == nil; temp = temp.Next {
-		temp.Next = NewElement(value, nil, temp)
+	for i := 1; i < d.Size; i++ {
+		temp  = temp.Next
 	}
+
+	temp.Next = NewElement(value, nil, temp)
 	d.Size ++
 
 	return temp.Next
@@ -45,16 +56,21 @@ func (d *DoubleLinkedList) InsertBefore(index int, value interface{}) (*Element,
 	}
 
 	temp := d.Header
-	for i := 0; i < index; i++ {
+	for i := 1; i < index; i++ {
 		temp = temp.Next
 	}
 
-	temp.Next = NewElement(value,nil, temp)
+	newElement := NewElement(value, nil, nil)
+	newElement.Next = temp
+	newElement.Prev = temp.Prev
+	temp.Prev.Next = newElement
+	temp.Prev = newElement
+
 	d.Size ++
 	return temp, nil
 }
 
-func (d *DoubleLinkedList) Remove(index int) (*Element,error) {
+func (d *DoubleLinkedList) Remove(index int) (*Element, error) {
 
 	err := d.checkElementIndex(index)
 	if err != nil {
@@ -62,12 +78,13 @@ func (d *DoubleLinkedList) Remove(index int) (*Element,error) {
 	}
 
 	temp := d.Header
-	for i := 0; i < index; i++ {
+	for i := 1; i < index; i++ {
 		temp = temp.Next
 	}
 
 	temp.Prev.Next = temp.Next
 	temp.Next.Prev = temp.Prev
+	d.Size--
 	return temp, err
 }
 
@@ -79,7 +96,7 @@ func (d *DoubleLinkedList) Set(index int, value interface{}) (*Element, error) {
 	}
 
 	temp := d.Header
-	for i := 0; i < index; i++ {
+	for i := 1; i < index; i++ {
 		temp = temp.Next
 	}
 
@@ -95,7 +112,7 @@ func (d *DoubleLinkedList) Get(index int) (*Element, error) {
 	}
 
 	temp := d.Header
-	for i := 0; i < index; i++ {
+	for i := 1; i < index; i++ {
 		temp = temp.Next
 	}
 
@@ -106,14 +123,13 @@ func (d *DoubleLinkedList) ShowLinkedList() []interface{} {
 
 	list := make([]interface{}, 0)
 
-
-	for temp := d.Header; temp.Next == nil; temp = temp.Next {
+	temp := d.Header
+	for i := 0; i < d.Size; i++ {
 		list = append(list, temp.Value)
+		temp = temp.Next
 	}
-
 	return list
 }
-
 
 func (d *DoubleLinkedList) checkElementIndex(index int) error {
 	if index < 0 || index > d.Size {
