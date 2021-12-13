@@ -1,8 +1,17 @@
-package standard
+package doublelinkedlist
 
 import (
 	"errors"
 )
+
+type IDoubleLinkedList interface {
+	Add(value interface{}) *Element
+	InsertBefore(index int, value interface{}) (*Element, error)
+	Remove(index int) (*Element, error)
+	Set(index int, value interface{}) (*Element, error)
+	Get(index int) (*Element, error)
+	ShowLinkedList() []interface{}
+}
 
 type Element struct {
 	Value		interface{}
@@ -50,8 +59,7 @@ func (d *DoubleLinkedList) Add(value interface{}) *Element {
 
 func (d *DoubleLinkedList) InsertBefore(index int, value interface{}) (*Element, error) {
 
-	err := d.checkElementIndex(index)
-	if err != nil {
+	if err := d.checkElementIndex(index); err != nil {
 		return nil, err
 	}
 
@@ -67,13 +75,12 @@ func (d *DoubleLinkedList) InsertBefore(index int, value interface{}) (*Element,
 	temp.Prev = newElement
 
 	d.Size ++
-	return temp, nil
+	return newElement, nil
 }
 
 func (d *DoubleLinkedList) Remove(index int) (*Element, error) {
 
-	err := d.checkElementIndex(index)
-	if err != nil {
+	if err := d.checkElementIndex(index); err != nil {
 		return nil, err
 	}
 
@@ -85,13 +92,12 @@ func (d *DoubleLinkedList) Remove(index int) (*Element, error) {
 	temp.Prev.Next = temp.Next
 	temp.Next.Prev = temp.Prev
 	d.Size--
-	return temp, err
+	return temp, nil
 }
 
 func (d *DoubleLinkedList) Set(index int, value interface{}) (*Element, error) {
 
-	err := d.checkElementIndex(index)
-	if err != nil {
+	if err := d.checkElementIndex(index); err != nil {
 		return nil, err
 	}
 
@@ -101,13 +107,12 @@ func (d *DoubleLinkedList) Set(index int, value interface{}) (*Element, error) {
 	}
 
 	temp.Value = value
-	return temp, err
+	return temp, nil
 }
 
 func (d *DoubleLinkedList) Get(index int) (*Element, error) {
 
-	err := d.checkElementIndex(index)
-	if err != nil {
+	if err := d.checkElementIndex(index); err != nil {
 		return nil, err
 	}
 
@@ -116,7 +121,7 @@ func (d *DoubleLinkedList) Get(index int) (*Element, error) {
 		temp = temp.Next
 	}
 
-	return temp, err
+	return temp, nil
 }
 
 func (d *DoubleLinkedList) ShowLinkedList() []interface{} {
