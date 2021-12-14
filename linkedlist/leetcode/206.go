@@ -1,6 +1,6 @@
 package leetcode
 
-
+// 反转链表
 func reverseListMethod001(head *ListNode) *ListNode {
 	var prev *ListNode
 	var tmp *ListNode
