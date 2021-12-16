@@ -2,7 +2,7 @@ package standard
 
 import "errors"
 
-const DefaultCapacity = 32
+const DefaultCapacity = 128
 
 type ArrayStack struct {
 	elementData		[]interface{}
@@ -49,13 +49,22 @@ func (a *ArrayStack) Peek() (interface{}, error) {
 	return a.elementAt(len - 1)
 }
 
-func (a *ArrayStack) Flush() {
+func (a *ArrayStack) Search(data interface{}) (int, error) {
+	i, err := a.lastIndexOf(data, a.elementCount - 1)
+	if err != nil {
+		return -1, err
+	}
 
+	if i >= 0 {
+		return a.size() - i, nil
+	}
+
+	return -1, nil
 }
 
 func (a *ArrayStack) addElement(data interface{}) {
 	a.elementCount++
-	a.elementData[a.elementCount] = data
+	a.elementData = append(a.elementData, data)
 }
 
 func (a *ArrayStack) elementAt(index int) (interface{}, error) {
@@ -74,6 +83,28 @@ func (a *ArrayStack) removeElementAt(index int) error {
 	a.elementCount--
 	a.elementData = append(a.elementData[:index], a.elementData[index + 1:]...)
 	return nil
+}
+
+func (a *ArrayStack) lastIndexOf(data interface{}, index int) (int, error) {
+	if index > a.elementCount {
+		return -1, errors.New("index out of bound exception")
+	}
+
+	if data == nil {
+		for i := index; i >= 0; i-- {
+			if a.elementData[i] == nil {
+				return i, nil
+			}
+		}
+	} else {
+		for i := index; i >= 0;	i-- {
+			if a.elementData[i] == data {
+				return i, nil
+			}
+		}
+	}
+
+	return -1, nil
 }
 
 func (a *ArrayStack) size() int {
