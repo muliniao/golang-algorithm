@@ -1,11 +1,14 @@
-package standard
+package arrayqueue
 
 const MinInitialCapacity = 8
 
+// 队满: tail == n
+// 队空: head == tail
+
 type ArrayQueue struct {
-	Elements	[]interface{}
-	Head		int
-	Tail		int
+	Elements []interface{}
+	Head     int
+	Tail     int
 }
 
 func NewArrayQueue() *ArrayQueue {
@@ -24,7 +27,7 @@ func (a *ArrayQueue) Add(object interface{}) bool {
 
 	// 数据搬移
 	for i := a.Head; i < a.Tail; i++ {
-		a.Elements[i - a.Head]	= a.Elements[i]
+		a.Elements[i-a.Head] = a.Elements[i]
 	}
 
 	a.Tail -= a.Head
@@ -42,7 +45,7 @@ func (a *ArrayQueue) Remove() interface{} {
 	a.Elements[a.Head] = nil
 	a.Head++
 	return headElement
-	
+
 }
 
 func (a *ArrayQueue) Element() interface{} {
@@ -53,6 +56,3 @@ func (a *ArrayQueue) Element() interface{} {
 
 	return a.Elements[a.Head]
 }
-
-
-

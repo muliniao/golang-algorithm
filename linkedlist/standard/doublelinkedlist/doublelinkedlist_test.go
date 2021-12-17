@@ -1,42 +1,37 @@
 package doublelinkedlist
 
 import (
-	"fmt"
 	"testing"
 )
 
+var doubleLinkedList *DoubleLinkedList
+
+func init() {
+	doubleLinkedList = NewDoubleLinkedList(NewElement(1, nil, nil))
+	doubleLinkedList.Add(2)
+	doubleLinkedList.Add(3)
+}
+
 func TestDoubleLinkedList_Add(t *testing.T) {
 
-	// New
-	doubleLinkedList := NewDoubleLinkedList(NewElement(1, nil, nil))
+}
 
-	// Add
-	fmt.Println("Add is calling")
-	doubleLinkedList.Add(2)
-	doubleLinkedList.Add(4)
-	fmt.Println(doubleLinkedList.ShowLinkedList())
+func TestDoubleLinkedList_InsertBefore(t *testing.T) {
 
-	// InsertBefore
-	fmt.Println("InsertBefore is calling")
-	doubleLinkedList.InsertBefore(3, 3)
-	fmt.Println(doubleLinkedList.ShowLinkedList())
+}
 
-	// Set
-	fmt.Println("Set is calling")
-	doubleLinkedList.Set(3,30)
-	fmt.Println(doubleLinkedList.ShowLinkedList())
+func TestDoubleLinkedList_Remove(t *testing.T) {
 
-	// Get
-	fmt.Println("Get is calling")
-	fmt.Println(doubleLinkedList.Get(2))
+}
 
-	// Remove
-	fmt.Println("Remove is calling")
-	doubleLinkedList.Remove(2)
-	fmt.Println(doubleLinkedList.ShowLinkedList())
+func TestDoubleLinkedList_Set(t *testing.T) {
 
-	// ShowLinkedList
-	fmt.Println("ShowLinkedList is calling")
-	fmt.Println(doubleLinkedList.ShowLinkedList())
+}
+
+func TestDoubleLinkedList_Get(t *testing.T) {
+
+}
+
+func TestDoubleLinkedList_ShowLinkedList(t *testing.T) {
 
 }

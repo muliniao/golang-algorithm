@@ -1,6 +1,6 @@
 package standard
 
-type Queue interface {
+type IQueue interface {
 	Add(object interface{}) bool
 	Remove() interface{}
 	Element() interface{}
