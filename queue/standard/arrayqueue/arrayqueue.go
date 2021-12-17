@@ -6,16 +6,15 @@ const MinInitialCapacity = 8
 // 队空: head == tail
 
 type ArrayQueue struct {
-	Elements []interface{}
+	Elements [MinInitialCapacity]interface{}
 	Head     int
 	Tail     int
 }
 
 func NewArrayQueue() *ArrayQueue {
 	return &ArrayQueue{
-		Elements: make([]interface{}, 0, MinInitialCapacity),
-		Head:     0,
-		Tail:     0,
+		Head: 0,
+		Tail: 0,
 	}
 }
 

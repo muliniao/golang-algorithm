@@ -6,16 +6,15 @@ const MinInitialCapacity = 8
 // 队空: head == tail
 
 type CycleQueue struct {
-	Elements []interface{}
+	Elements [MinInitialCapacity]interface{}
 	Head     int
 	Tail     int
 }
 
 func NewCycleQueue() *CycleQueue {
 	return &CycleQueue{
-		Elements: make([]interface{}, 0, MinInitialCapacity),
-		Head:     0,
-		Tail:     0,
+		Head: 0,
+		Tail: 0,
 	}
 }
 
