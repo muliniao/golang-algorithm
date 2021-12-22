@@ -1,12 +1,12 @@
-package standard
+package arraystack
 
 import "errors"
 
 const DefaultCapacity = 128
 
 type ArrayStack struct {
-	elementData		[]interface{}
-	elementCount	int
+	elementData  []interface{}
+	elementCount int
 }
 
 func NewArrayStack() *ArrayStack {
@@ -17,7 +17,7 @@ func NewArrayStack() *ArrayStack {
 }
 
 func (a *ArrayStack) Push(data interface{}) (interface{}, error) {
-	if a.size() == DefaultCapacity{
+	if a.size() == DefaultCapacity {
 		return nil, errors.New("stack is full")
 	}
 
@@ -50,7 +50,7 @@ func (a *ArrayStack) Peek() (interface{}, error) {
 }
 
 func (a *ArrayStack) Search(data interface{}) (int, error) {
-	i, err := a.lastIndexOf(data, a.elementCount - 1)
+	i, err := a.lastIndexOf(data, a.elementCount-1)
 	if err != nil {
 		return -1, err
 	}
@@ -81,7 +81,7 @@ func (a *ArrayStack) removeElementAt(index int) error {
 	}
 
 	a.elementCount--
-	a.elementData = append(a.elementData[:index], a.elementData[index + 1:]...)
+	a.elementData = append(a.elementData[:index], a.elementData[index+1:]...)
 	return nil
 }
 
@@ -97,7 +97,7 @@ func (a *ArrayStack) lastIndexOf(data interface{}, index int) (int, error) {
 			}
 		}
 	} else {
-		for i := index; i >= 0;	i-- {
+		for i := index; i >= 0; i-- {
 			if a.elementData[i] == data {
 				return i, nil
 			}
