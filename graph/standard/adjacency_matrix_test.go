@@ -1,11 +1,13 @@
 package standard
 
-import "testing"
+import (
+	"testing"
+)
 
 var adjacencyMatrix *AdjacencyMatrix
 
 func init() {
-	adjacencyMatrix = NewAdjacencyMatrix(6)
+	adjacencyMatrix = NewAdjacencyMatrix(5)
 }
 
 func TestAdjacencyMatrix_InsertVertex(t *testing.T) {
@@ -18,13 +20,12 @@ func TestAdjacencyMatrix_InsertVertex(t *testing.T) {
 
 func TestAdjacencyMatrix_InsertEdge(t *testing.T) {
 
-	adjacencyMatrix.InsertEdge(0, 0, 0)
+	// A-B, A-C, B-C, B-D, B-E
 	adjacencyMatrix.InsertEdge(0, 1, 1)
 	adjacencyMatrix.InsertEdge(0, 2, 1)
-	adjacencyMatrix.InsertEdge(0, 3, 1)
-	adjacencyMatrix.InsertEdge(0, 4, 1)
-	adjacencyMatrix.InsertEdge(0, 5, 0)
+	adjacencyMatrix.InsertEdge(1, 2, 1)
+	adjacencyMatrix.InsertEdge(1, 3, 1)
+	adjacencyMatrix.InsertEdge(1, 4, 1)
 
-	adjacencyMatrix.InsertEdge(1, 0, 1)
-
+	adjacencyMatrix.ShowGraph()
 }

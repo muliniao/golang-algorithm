@@ -1,21 +1,17 @@
 package standard
 
+import "fmt"
+
 type AdjacencyMatrix struct {
 	VertexList []string
-	Edges      [][]int
+	Edges      [5][5]int
 	NumOfEdges int
 }
 
 func NewAdjacencyMatrix(n int) *AdjacencyMatrix {
-
-	edges := make([][]int, 0, n)
-	for i := range edges {
-		edges[i] = make([]int, 0, n)
-	}
-
 	return &AdjacencyMatrix{
 		VertexList: make([]string, 0, n),
-		Edges:      edges,
+		Edges:      [5][5]int{},
 		NumOfEdges: 0,
 	}
 }
@@ -57,5 +53,7 @@ func (a *AdjacencyMatrix) GetWeight(v1, v2 int) int {
 
 // ShowGraph ... 显示图对应的矩阵
 func (a *AdjacencyMatrix) ShowGraph() {
-
+	for _, v := range a.Edges {
+		fmt.Println(v)
+	}
 }
