@@ -57,3 +57,23 @@ func (a *AdjacencyMatrix) ShowGraph() {
 		fmt.Println(v)
 	}
 }
+
+// GetFirstNeighbor ... 返回第一个邻接结点
+func (a *AdjacencyMatrix) GetFirstNeighbor(index int) int {
+	for i := 0; i < len(a.VertexList); i++ {
+		if a.VertexList[index][i] > 0 {
+			return i
+		}
+	}
+	return -1
+}
+
+// GetNextNeighbor ... 返回前一个邻接结点的下标获取下一个邻接结点
+func (a *AdjacencyMatrix) GetNextNeighbor(v1, v2 int) int {
+	for i := v2 + 1; i < len(a.VertexList); i++ {
+		if a.VertexList[v1][i] > 0 {
+			return i
+		}
+	}
+	return -1
+}
