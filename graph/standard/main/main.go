@@ -12,10 +12,10 @@ func main() {
 	lists = make([]*list.List, 0)
 
 	linkedList001 := list.New()
-	linkedList001.PushFront("aaaaaa")
-	linkedList001.PushFront("bbbbbb")
-	linkedList001.PushFront("cccccc")
-	linkedList001.PushFront("dddddd")
+	linkedList001.PushBack("aaaaaa")
+	linkedList001.PushBack("bbbbbb")
+	linkedList001.PushBack("cccccc")
+	linkedList001.PushBack("dddddd")
 
 	linkedList002 := list.New()
 	linkedList002.PushFront("111111")
