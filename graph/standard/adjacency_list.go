@@ -7,6 +7,12 @@ import (
 
 const numOfVertex = 5
 
+// Bill ---> Rocket ---> Linda
+// Rocket ---> Bruce ---> Shirly ---> Bill
+// Linda ---> Bill ---> Shirly
+// Shirly ---> Bill
+// Bruce ---> Rocket
+
 // Edge : 边定义
 type Edge struct {
 	leftVertex  int
@@ -52,7 +58,6 @@ func NewGraph() *Graph {
 }
 
 func (g *Graph) InsertVertex(vertex VNode) error {
-
 	if len(g.vNodeLists) >= numOfVertex {
 		return fmt.Errorf(" ")
 	}
@@ -64,4 +69,25 @@ func (g *Graph) InsertVertex(vertex VNode) error {
 	}
 
 	return nil
+}
+
+func (g *Graph) InsertEdge(edge *Edge) error {
+
+	return nil
+}
+
+func (g *Graph) GetNumOfVertex() {
+
+}
+
+func (g *Graph) GetNumOfEdge() {
+
+}
+
+func (g *Graph) GetWeight() {
+
+}
+
+func (g *Graph) ShowGraph() {
+
 }
