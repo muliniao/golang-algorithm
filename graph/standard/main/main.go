@@ -1,30 +1,21 @@
 package main
 
 import (
-	"container/list"
 	"fmt"
+
+	"golang-algorithm/graph/standard"
 )
 
 func main() {
 
-	var lists []*list.List
+	graph := standard.NewGraph()
 
-	lists = make([]*list.List, 0)
-
-	linkedList001 := list.New()
-	linkedList001.PushBack("aaaaaa")
-	linkedList001.PushBack("bbbbbb")
-	linkedList001.PushBack("cccccc")
-	linkedList001.PushBack("dddddd")
-
-	linkedList002 := list.New()
-	linkedList002.PushFront("111111")
-	linkedList002.PushFront("222222")
-	linkedList002.PushFront("333333")
-
-	lists = append(lists, linkedList001, linkedList002)
-
-	fmt.Println(lists[0])
-	fmt.Println(lists[1])
+	fmt.Println("------------------start to insert vertex-----------------------")
+	graph.InsertVertex(standard.NewVNode("Bill"))
+	graph.InsertVertex(standard.NewVNode("Rocket"))
+	graph.InsertVertex(standard.NewVNode("Linda"))
+	graph.InsertVertex(standard.NewVNode("Shirly"))
+	graph.InsertVertex(standard.NewVNode("Bruce"))
+	fmt.Println("-------------------finish to insert vertex----------------------")
 
 }

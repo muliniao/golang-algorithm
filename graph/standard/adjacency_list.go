@@ -7,11 +7,11 @@ import (
 
 const numOfVertex = 5
 
-// Bill ---> Rocket ---> Linda
-// Rocket ---> Bruce ---> Shirly ---> Bill
-// Linda ---> Bill ---> Shirly
-// Shirly ---> Bill
-// Bruce ---> Rocket
+// [0]Bill ---> Rocket ---> Linda
+// [1]Rocket ---> Bruce ---> Shirly ---> Bill
+// [2]Linda ---> Bill ---> Shirly
+// [3]Shirly ---> Bill
+// [4]Bruce ---> Rocket
 
 // Edge : 边定义
 type Edge struct {
@@ -27,10 +27,23 @@ type AdjVNode struct {
 	//nextAdjVNode *AdjVNode   // 下一个边表结点
 }
 
+func NewAdjNode(vertex int, vertexInfo *VertexInfo) *AdjVNode {
+	return &AdjVNode{
+		vertex:     vertex,
+		vertexINfo: vertexInfo,
+	}
+}
+
 // VNode : 头结点
 type VNode struct {
-	firstEdge *AdjVNode
-	data      interface{}
+	//firstEdge *AdjVNode
+	data interface{}
+}
+
+func NewVNode(data interface{}) *VNode {
+	return &VNode{
+		data: data,
+	}
 }
 
 // VertexInfo : 结点信息
@@ -57,9 +70,9 @@ func NewGraph() *Graph {
 	return graph
 }
 
-func (g *Graph) InsertVertex(vertex VNode) error {
+func (g *Graph) InsertVertex(vertex *VNode) error {
 	if len(g.vNodeLists) >= numOfVertex {
-		return fmt.Errorf(" ")
+		return fmt.Errorf("cannot exceed 5 vertex")
 	}
 
 	for _, v := range g.vNodeLists {
@@ -68,20 +81,32 @@ func (g *Graph) InsertVertex(vertex VNode) error {
 		}
 	}
 
+	g.numOfVertex++
 	return nil
 }
 
 func (g *Graph) InsertEdge(edge *Edge) error {
+	if edge.leftVertex < 0 || edge.leftVertex > 5 {
+		return fmt.Errorf("")
+	}
 
+	if edge.rightVertex < 0 || edge.rightVertex > 5 {
+		return fmt.Errorf("")
+	}
+
+	newAdjNode := NewAdjNode(edge.rightVertex, edge.vertexInfo)
+	g.vNodeLists[edge.leftVertex].PushBack(newAdjNode)
+
+	g.numOfEdge++
 	return nil
 }
 
-func (g *Graph) GetNumOfVertex() {
-
+func (g *Graph) GetNumOfVertex() int {
+	return g.numOfVertex
 }
 
-func (g *Graph) GetNumOfEdge() {
-
+func (g *Graph) GetNumOfEdge() int {
+	return g.numOfEdge
 }
 
 func (g *Graph) GetWeight() {
