@@ -20,6 +20,14 @@ type Edge struct {
 	vertexInfo  *VertexInfo
 }
 
+func NewEdge(leftVertex, rightVertex, weight int) *Edge {
+	return &Edge{
+		leftVertex:  leftVertex,
+		rightVertex: rightVertex,
+		vertexInfo:  &VertexInfo{weight: weight},
+	}
+}
+
 // AdjVNode : 边表结点
 type AdjVNode struct {
 	vertex     int         // 顶点下标
@@ -62,36 +70,37 @@ func NewGraph() *Graph {
 	graph := new(Graph)
 	graph.numOfEdge = 0
 	graph.numOfVertex = numOfVertex
+	graph.vNodeLists = make([]*list.List, 0)
 
-	for i := 0; i < numOfVertex-1; i++ {
-		graph.vNodeLists[i] = list.New()
+	for i := 0; i < numOfVertex; i++ {
+		graph.vNodeLists = append(graph.vNodeLists, list.New())
 	}
 
 	return graph
 }
 
 func (g *Graph) InsertVertex(vertex *VNode) error {
-	if len(g.vNodeLists) >= numOfVertex {
+	if len(g.vNodeLists) > numOfVertex {
 		return fmt.Errorf("cannot exceed 5 vertex")
 	}
 
 	for _, v := range g.vNodeLists {
 		if v.Len() == 0 {
 			v.PushBack(vertex)
+			break
 		}
 	}
 
-	g.numOfVertex++
 	return nil
 }
 
 func (g *Graph) InsertEdge(edge *Edge) error {
 	if edge.leftVertex < 0 || edge.leftVertex > 5 {
-		return fmt.Errorf("")
+		return fmt.Errorf("over range")
 	}
 
 	if edge.rightVertex < 0 || edge.rightVertex > 5 {
-		return fmt.Errorf("")
+		return fmt.Errorf("over range")
 	}
 
 	newAdjNode := NewAdjNode(edge.rightVertex, edge.vertexInfo)
@@ -110,9 +119,13 @@ func (g *Graph) GetNumOfEdge() int {
 }
 
 func (g *Graph) GetWeight() {
-
+	fmt.Println("not implement...")
 }
 
 func (g *Graph) ShowGraph() {
-
+	for _, v := range g.vNodeLists {
+		for i := v.Front(); i != nil; i = i.Next() {
+			fmt.Println(i.Value)
+		}
+	}
 }
